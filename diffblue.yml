@@ -1,5 +1,3 @@
-buildCmd: mvn compile
-testCmd: mvn test
 ignoreExistingCoverage: true
 cbmcArguments:
   java-mock-class: ["java.security.KeyFactory", "java.security.Signature", "java.util.Date", "java.io.FileReader", "java.nio.file.Files", "java.io.FileInputStream", "java.lang.ProcessBuilder", "java.lang.Process", "java.io.BufferedReader", "java.io.Reader"]
@@ -10,10 +8,9 @@ phases:
     verbosity: 10
     depth: false
     unwind: 1
-    string-max-length: 200
-    string-max-input-length: 1
+    max-nondet-string-length: 1
     java-max-vla-length: 1
-    java-max-input-array-length: 1
+    max-nondet-array-length: 1
     string-printable: true
 -
   timeout: 300
@@ -21,22 +18,19 @@ phases:
     verbosity: 10
     depth: false
     unwind: 2
-    string-max-length: 300
-    string-max-input-length: 10
+    max-nondet-string-length: 10
     java-max-vla-length: 1025
-    java-max-input-array-length: 3
+    max-nondet-array-length: 4
     string-printable: false
-    java-throw-runtime-exceptions: true
+    throw-runtime-exceptions: true
 -
   timeout: 300
   cbmcArguments:
     verbosity: 10
     depth: false
     unwind: 2
-    string-max-length: false
-    string-max-input-length: false
-    refine-strings: false
+    max-nondet-string-length: false 
     java-max-vla-length: 1025
-    java-max-input-array-length: 4
+    max-nondet-array-length: 4
     string-printable: false
-    java-throw-runtime-exceptions: true
+    throw-runtime-exceptions: true
