@@ -1,3 +1,6 @@
+buildCmd: ant compile
+testCmd: ant test
+classpathCmd: find "$(pwd)" -regextype posix-egrep -regex ".*\.(jar|class)$"  -type f -printf '%p:' | sed 's/:$/\n/'
 cbmcArguments:
   # Because tic-tac-toe has 9 squares, we need to unwind the loops 10 times
   # This will be auto-detected in a future version
