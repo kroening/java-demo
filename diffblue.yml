@@ -7,11 +7,11 @@ units:
       file: com/diffblue/javademo/UserAccess.class
       sourceDir: src/main/java
       sourceFile: com/diffblue/javademo/UserAccess.java
-  - context:
-    - dir: target/classes
-      file: com/diffblue/javademo/serveraccess/DatabaseDao.class
-      sourceDir: src/main/java
-      sourceFile: com/diffblue/javademo/serveraccess/DatabaseDao.java
+      context:
+      - dir: target/classes
+        file: com/diffblue/javademo/serveraccess/DatabaseDao.class
+        sourceDir: src/main/java
+        sourceFile: com/diffblue/javademo/serveraccess/DatabaseDao.java
 phases:
 -
  timeout: 300
