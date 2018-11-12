@@ -1,4 +1,35 @@
 cbmcArguments:
-  # Because tic-tac-toe has 9 squares, we need to unwind the loops 10 times
-  # This will be auto-detected in a future version
-  max-nondet-array-length: 10
+ classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+ depth: false
+units:
+  - target:
+    - dir: target/classes
+      file: com/diffblue/javademo/UserAccess.class
+      sourceDir: src/main/java
+      sourceFile: com/diffblue/javademo/UserAccess.java
+phases:
+-
+ timeout: 300
+ cbmcArguments:
+   java-assume-inputs-non-null: true
+   max-nondet-array-length: 10
+   do-not-test-methods-with-access: [ private ]
+   cover-function-only: false
+   unwind: 1
+-
+ timeout: 300
+ cbmcArguments:
+   java-assume-inputs-non-null: true
+   max-nondet-array-length: 20
+   do-not-test-methods-with-access: [ private ]
+   cover-function-only: false
+   unwind: 3
+-
+ timeout: 300
+ cbmcArguments:
+   java-assume-inputs-non-null: true
+   max-nondet-array-length: 30
+   max-nondet-string-length: 10
+   do-not-test-methods-with-access: [ private ]
+   cover-function-only: false
+   unwind: 5
