@@ -1,6 +1,12 @@
 cbmcArguments:
  classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
  depth: false
+units:
+  - target:
+    - dir: target/classes
+      file: com/diffblue/javademo/UserAccess.class
+      sourceDir: src/main/java
+      sourceFile: com/diffblue/javademo/UserAccess.java
 phases:
 -
  timeout: 300
