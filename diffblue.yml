@@ -1,4 +1,17 @@
-cbmcArguments:
-  # Because tic-tac-toe has 9 squares, we need to unwind the loops 10 times
-  # This will be auto-detected in a future version
-  max-nondet-array-length: 10
+phases:
+-
+  cbmcArguments:
+    unwind: 1
+-
+  timeout: 100
+  cbmcArguments:
+    unwind: 2
+-
+  timeout: 100
+  cbmcArguments:
+    unwind: 2
+-
+  timeout: 100
+  cbmcArguments:
+    unwind: 10
+    max-nondet-array-length: 10
