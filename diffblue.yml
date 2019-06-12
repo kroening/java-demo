@@ -1,2 +1,2 @@
 cbmcArguments:
-  cover: branch
+  cover: [branch, location]
