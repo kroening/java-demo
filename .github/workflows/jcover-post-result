@@ -14,7 +14,7 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     git branch -C "jcover-${branch}"
     git rm -r src/test
     mv src/jcover src/test
-    git add src/jcover
+    git add src/test
     git push --set-upstream origin "jcover-${branch}"
     comment="JCover generated X tests for PR #${pr}. "
     comment="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${branch})."
@@ -26,7 +26,7 @@ else
     git checkout -B "jcover-${branch}"
     git rm -r src/test
     mv src/jcover src/test
-    git add src/jcover
+    git add src/test
     git push --set-upstream origin "jcover-${branch}"
     comment="JCover generated X tests for branch ${branch}. "
     comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${branch}...jcover-${branch})."
