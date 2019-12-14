@@ -22,9 +22,7 @@ jobs:
       run: mvn test
 
     - name: Setup JCover
-      run: |
-        sudo apt-get install curl jq
-        (cd .github/workflows ; tar xfz jcover-*.tgz )
+      run: (cd .github/workflows ; tar xfz jcover-*.tgz )
 
     - name: Run JCover
       run: .github/workflows/jcover --mvn
