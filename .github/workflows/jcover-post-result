@@ -9,8 +9,15 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/master)"
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
     pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-    comment="JCover generated X tests for PR #${PR}. "
-    comment="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${PR})."
+    branch="${pr}"
+    echo Branch: ${branch}
+    git branch -B jcover-${branch}
+    git rm -r src/test
+    mv src/jcover src/test
+    git add src/jcover
+    git push --set-upstream origin jcover-${branch}
+    comment="JCover generated X tests for PR #${pr}. "
+    comment="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${branch})."
 else
     echo "JCover commit mode"
     common_ancestor_sha="$(git rev-parse HEAD^1)"
@@ -18,6 +25,11 @@ else
     echo ${GITHUB_REF}
     branch="${GITHUB_REF##*/}"
     echo Branch: ${branch}
+    git branch -B jcover-${branch}
+    git rm -r src/test
+    mv src/jcover src/test
+    git add src/jcover
+    git push --set-upstream origin jcover-${branch}
     comment="JCover generated X tests for branch ${branch}. "
     comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${branch}...jcover-${branch})."
 fi

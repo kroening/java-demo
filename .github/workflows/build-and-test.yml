@@ -33,4 +33,4 @@ jobs:
       if: "!startsWith(github.ref, 'jcover-')"
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: .github/workflows/post-comment
+      run: .github/workflows/jcover-post-result
