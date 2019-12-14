@@ -20,16 +20,14 @@ else
     comment="${comment}[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${BRANCH}...jcover-${BRANCH})."
 fi
 
-# Comment on Github
-
-comment="JCover genereted X tests\n ${common_ancestor_sha}"
+# Post comment on Github
 
 curl --include --verbose --fail \
   -H "Accept: application/json" \
   -H "Content-Type:application/json" \
   -H "Authorization: token ${GITHUB_TOKEN}" \
   --request POST \
-  --data "$(jq --null-input --arg escaped_diff "$comment" '{body: $escaped_diff}')" \
+  --data "$(jq --null-input --arg escaped_comment "$comment" '{body: $escaped_comment}')" \
   $api_url
 
 echo "Done"
