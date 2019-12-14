@@ -3,6 +3,11 @@
 # stop executing after error
 set -e 
 
+REPO_FULLNAME=$(jq -r ".repository.full_name" "$GITHUB_EVENT_PATH")
+git remote add origin https://x-access-token:$GITHUB_TOKEN@github.com/$REPO_FULLNAME.git
+git config --global user.email "jcover@diffblue.com"
+git config --global user.name "Diffblue JCover"
+
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
     head=$(git symbolic-ref --short HEAD)
