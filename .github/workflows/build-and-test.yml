@@ -27,7 +27,7 @@ jobs:
 
     - name: Run JCover
       if: "!startsWith(github.ref, 'jcover-')"
-      run: .github/workflows/jcover --mvn -d src/test
+      run: .github/workflows/jcover --mvn
 
     - name: Post JCover Results
       if: "!startsWith(github.ref, 'jcover-')"

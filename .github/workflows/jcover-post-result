@@ -10,11 +10,11 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/master)"
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
     branch="${pr}"
-    git branch -C jcover-${branch}
+    git branch -C "jcover-${branch}"
     git rm -r src/test
     mv src/jcover src/test
     git add src/jcover
-    git push --set-upstream origin jcover-${branch}
+    git push --set-upstream origin "jcover-${branch}"
     comment="JCover generated X tests for PR #${pr}. "
     comment="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${branch})."
 else
@@ -22,11 +22,11 @@ else
     echo "JCover commit mode, on branch ${branch}"
     common_ancestor_sha="$(git rev-parse HEAD^1)"
     api_url="https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments"
-    git branch -C jcover-${branch}
+    git checkout -B "jcover-${branch}"
     git rm -r src/test
     mv src/jcover src/test
     git add src/jcover
-    git push --set-upstream origin jcover-${branch}
+    git push --set-upstream origin "jcover-${branch}"
     comment="JCover generated X tests for branch ${branch}. "
     comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${branch}...jcover-${branch})."
 fi
