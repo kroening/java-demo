@@ -22,15 +22,15 @@ jobs:
       run: mvn test
 
     - name: Setup JCover
-      if: !startsWith(github.ref, 'jcover-')
+      if: "!startsWith(github.ref, 'jcover-')"
       run: (cd .github/workflows ; tar xfz jcover-*.tgz )
 
     - name: Run JCover
-      if: !startsWith(github.ref, 'jcover-')
+      if: "!startsWith(github.ref, 'jcover-')"
       run: .github/workflows/jcover --mvn -d src/test
 
     - name: Post JCover Results
-      if: !startsWith(github.ref, 'jcover-')
+      if: "!startsWith(github.ref, 'jcover-')"
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: .github/workflows/post-comment
