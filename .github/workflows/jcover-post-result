@@ -10,7 +10,7 @@ git config --global user.name "Diffblue JCover"
 
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-    base=$(jq --raw-output .base.ref "$GITHUB_EVENT_PATH")
+    base=$(jq --raw-output .pull_request.base.ref "$GITHUB_EVENT_PATH")
     echo "JCover PR mode, for PR ${pr}, against ${base}"
     # find the closest common ancestor between the PR branch and master
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/${base})"
