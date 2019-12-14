@@ -4,25 +4,32 @@
 set -e 
 
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-    echo "PR mode"
+    echo "JCover PR mode"
     # find the closest common ancestor between the PR branch and master
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/master)"
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
+    pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+    comment="JCover genereted X tests for PR #${PR}. "
+    comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${PR})."
 else
-    echo "Commit mode"
+    echo "JCover commit mode"
     common_ancestor_sha="$(git rev-parse HEAD^1)"
     api_url="https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments"
+    branch=${GITHUB_REF##*/}
+    comment="JCover genereted X test for branch ${BRANCH}. "
+    comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${BRANCH}...jcover-${BRANCH})."
 fi
 
 # Comment on Github
 
-comment="Test comment ${common_ancestor_sha}"
+comment="JCover genereted X tests\n ${common_ancestor_sha}"
 
 curl --include --verbose --fail \
   -H "Accept: application/json" \
   -H "Content-Type:application/json" \
   -H "Authorization: token ${GITHUB_TOKEN}" \
-  --request POST --data "$(jq --null-input --arg escaped_diff "$comment" '{body: $escaped_diff}')" \
+  --request POST \
+  --data "$(jq --null-input --arg escaped_diff "$comment" '{body: $escaped_diff}')" \
   $api_url
 
 echo "Done"
