@@ -5,7 +5,8 @@ set -e
 
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-    echo "JCover PR mode, for PR ${pr}"
+    head=$(git symbolic-ref --short HEAD)
+    echo "JCover PR mode, for PR ${pr}, against ${head}"
     # find the closest common ancestor between the PR branch and master
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/master)"
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
