@@ -23,8 +23,8 @@ jobs:
 
     - name: Setup JCover
       run: |
-      apt-get install curl jq
-      (cd .github/workflows ; tar xfz jcover-*.tgz )
+        apt-get install curl jq
+        (cd .github/workflows ; tar xfz jcover-*.tgz )
 
     - name: Run JCover
       run: .github/workflows/jcover --mvn
