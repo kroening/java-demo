@@ -32,4 +32,9 @@ public class Search {
     }
     return false;
   }
+
+  public boolean someNewMethod()
+  {
+    return true;
+  }
 }
