@@ -33,8 +33,7 @@ public class Search {
     return false;
   }
 
-  public boolean someNewMethod()
-  {
+  public boolean someNewMethod() {
     return true;
   }
 }
