@@ -9,7 +9,7 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/master)"
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
     pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-    comment="JCover genereted X tests for PR #${PR}. "
+    comment="JCover generated X tests for PR #${PR}. "
     comment="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${PR})."
 else
     echo "JCover commit mode"
@@ -18,7 +18,7 @@ else
     echo ${GITHUB_REF}
     branch="${GITHUB_REF##*/}"
     echo Branch: ${branch}
-    comment="JCover genereted X tests for branch ${branch}. "
+    comment="JCover generated X tests for branch ${branch}. "
     comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${branch}...jcover-${branch})."
 fi
 
