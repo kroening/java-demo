@@ -10,14 +10,14 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
     pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
     comment="JCover genereted X tests for PR #${PR}. "
-    comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${PR})."
+    comment="${comment}[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${PR})."
 else
     echo "JCover commit mode"
     common_ancestor_sha="$(git rev-parse HEAD^1)"
     api_url="https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments"
     branch=${GITHUB_REF##*/}
     comment="JCover genereted X test for branch ${BRANCH}. "
-    comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${BRANCH}...jcover-${BRANCH})."
+    comment="${comment}[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${BRANCH}...jcover-${BRANCH})."
 fi
 
 # Comment on Github
