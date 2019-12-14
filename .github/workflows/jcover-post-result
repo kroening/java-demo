@@ -4,14 +4,13 @@
 set -e 
 
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-    echo "JCover PR mode"
+    pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+    echo "JCover PR mode, for PR ${pr}"
     # find the closest common ancestor between the PR branch and master
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/master)"
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
-    pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
     branch="${pr}"
-    echo Branch: ${branch}
-    git branch -B jcover-${branch}
+    git branch -C jcover-${branch}
     git rm -r src/test
     mv src/jcover src/test
     git add src/jcover
@@ -19,13 +18,11 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     comment="JCover generated X tests for PR #${pr}. "
     comment="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/master...jcover-${branch})."
 else
-    echo "JCover commit mode"
+    branch="${GITHUB_REF##*/}"
+    echo "JCover commit mode, on branch ${branch}"
     common_ancestor_sha="$(git rev-parse HEAD^1)"
     api_url="https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments"
-    echo ${GITHUB_REF}
-    branch="${GITHUB_REF##*/}"
-    echo Branch: ${branch}
-    git branch -B jcover-${branch}
+    git branch -C jcover-${branch}
     git rm -r src/test
     mv src/jcover src/test
     git add src/jcover
