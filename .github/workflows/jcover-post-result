@@ -16,7 +16,7 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
     common_ancestor_sha="$(git merge-base $GITHUB_SHA origin/${base})"
     api_url="$(cat $GITHUB_EVENT_PATH | jq --raw-output '.pull_request.comments_url')"
     branch="${pr}"
-    git branch -C "jcover-${branch}"
+    git checkout -B "jcover-${branch}"
     git rm -r src/test
     mv src/jcover src/test
     git add src/test
