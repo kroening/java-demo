@@ -4,7 +4,7 @@
 set -e 
 
 REPO_FULLNAME=$(jq -r ".repository.full_name" "$GITHUB_EVENT_PATH")
-git remote add origin https://x-access-token:$GITHUB_TOKEN@github.com/$REPO_FULLNAME.git
+git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/$REPO_FULLNAME.git
 git config --global user.email "jcover@diffblue.com"
 git config --global user.name "Diffblue JCover"
 
