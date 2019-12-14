@@ -14,19 +14,9 @@ else
     api_url="https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments"
 fi
 
-####################################################
-# Build both site versions and determine diff
-####################################################
-
-cd /github/workspace
-jekyll build --destination /tmp/new/
-git checkout $common_ancestor_sha
-jekyll build --destination /tmp/old
-diff="$(diff --recursive --new-file --unified=0 /tmp/old /tmp/new || true)" # 'or true' because a non-identical diff outputs 1 as the exit status
-
 # Comment on Github
 
-comment="Test comment"
+comment="Test comment ${common_ancestor_sha}"
 
 curl --include --verbose --fail \
   -H "Accept: application/json" \
