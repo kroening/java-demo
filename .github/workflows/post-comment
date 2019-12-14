@@ -16,16 +16,17 @@ else
     common_ancestor_sha="$(git rev-parse HEAD^1)"
     api_url="https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments"
     echo ${GITHUB_REF}
-    branch=${GITHUB_REF##*/}
-    comment="JCover genereted X tests for branch ${BRANCH}. "
-    comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${BRANCH}...jcover-${BRANCH})."
+    branch="${GITHUB_REF##*/}"
+    echo Branch: ${branch}
+    comment="JCover genereted X tests for branch ${branch}. "
+    comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${branch}...jcover-${branch})."
 fi
 
 # Post comment on Github
 
 curl --include --verbose --fail \
   -H "Accept: application/json" \
-  -H "Content-Type:application/json" \
+  -H "Content-Type: application/json" \
   -H "Authorization: token ${GITHUB_TOKEN}" \
   --request POST \
   --data "$(jq --null-input --arg escaped_comment "$comment" '{body: $escaped_comment}')" \
