@@ -33,7 +33,7 @@ jobs:
 
     - name: Run JCover
       if: "!startsWith(github.ref, 'jcover-')"
-      run: .github/workflows/jcover --mvn
+      run: .github/workflows/jcover --mvn --html-report /tmp/jcover.html
 
     - name: Post JCover Results
       if: "!startsWith(github.ref, 'jcover-')"

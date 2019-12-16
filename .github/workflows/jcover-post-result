@@ -40,6 +40,10 @@ else
     comment+="[View the diff](http://github.com/${GITHUB_REPOSITORY}/compare/${branch}...jcover-${branch})."
 fi
 
+comment+="<table>"
+comment+="`cat /tmp/jcover.html`"
+comment+="</table>"
+
 # Post comment on Github
 
 curl --include --silent --show-error --fail \
