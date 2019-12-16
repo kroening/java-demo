@@ -34,6 +34,6 @@ public class Search {
   }
 
   public boolean someNewMethod() {
-    return true;
+    return false;
   }
 }
